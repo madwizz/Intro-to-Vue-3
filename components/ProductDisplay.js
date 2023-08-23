@@ -21,15 +21,25 @@ app.component('product-display', {
       <p v-else>Out of Stock</p>
       <p>Shipping: {{ shipping }}</p>
       <p>{{ description }}</p>
+      
       <!-- details -->
-      <product-details :details='details'></product-details>
-      <div 
-        v-for="(variant, index) in variants" 
-        :key="variant.id" 
-        @mouseover="updateVariant(index)"
-        class="color-circle"
-        :style="{ backgroundColor: variant.color }">
+      <!-- <product-details :details='details'></product-details> -->
+
+      <ul class="product-description">
+        <li>
+          {{ selectedInfo }}
+        </li>
+      </ul>
+
+      <div class="color-circle-container">
+        <div 
+          v-for="(variant, index) in variants" 
+          :key="variant.id" 
+          @mouseover="updateVariant(index)"
+          class="color-circle"
+          :style="{ backgroundColor: variant.color }">
         </div>
+      </div>
       <div 
         v-for="variant in variants" 
         :key="variant.id">
@@ -50,7 +60,7 @@ app.component('product-display', {
           @click="removeFromCart" 
           :class="{ disabledButton: !inStock }" 
           :disabled="!inStock">
-          Remove from Cart
+          Remove Item
         </button>
       </div>
       <a :href="url">Link</a>
@@ -67,28 +77,24 @@ app.component('product-display', {
 data() {
   return {
     onSale: true,
-    brand: 'Vue Mastery',
-    product: 'Socks',
-    description: 'Best socks ever',
+    brand: 'Smashing Pumpkins',
+    product: 'Mellon Collie and Infinite Sadness',
+    description: 'An iconic double album, spanning a diverse sonic landscape that explores themes of melancholy and emotional depth through a fusion of alternative rock, grunge, and dreamy psychedelia.',
     selectedVariant: 0,
+    selectedInfo: '',
     url: 'https://www.google.ru/search?newwindow=1&sca_esv=559050992&sxsrf=AB5stBh1gpEpx8eeYkHfkTX0b_KrjeGiHA:1692701675084&q=vue+mastery+socks&tbm=isch&source=lnms&sa=X&ved=2ahUKEwjbzbaQjfCAAxUjSvEDHWxcDT0Q0pQJegQIDBAB&biw=780&bih=703&dpr=1.25#imgrc=tRXYwf5E6vJ4YM',
-    details: [
-        '50% cotton', 
-        '30% wool', 
-        '20% polyester'
-      ],
     variants: [
       { id: 2234, 
-        color: 'green', 
-        size: 'S', 
-        image: './assets/images/socks_green.jpg',
+        color: '#7F6236',
+        image: './assets/images/mellon-reissue.jpg',
         quantity: 50,
+        info: '180 gram with a booklet featuring personal notes and photos, and a 28 page lyric booklet. Shrink-wrapped with a liner covering the rear and spine of the slipcase. Each disc is housed in a custom inner sleeve, itself housed in a secondary custom sleeve.',
       },
       { id: 2235, 
-        color: 'blue', 
-        size: 'M', 
-        image: './assets/images/socks_blue.jpg',
+        color: '#5B5D72',
+        image: './assets/images/mellon-classic.jpg',
         quantity: 0,
+        info: 'The first vinyl edition has a unique track order and 2 bonus tracks (and is 3xLP not 4xLP). This reprint follows the regular track order (as seen on the 1995 1st print 2xCD, 2xCassette, and 2xMiniDisc) and does not have the bonus tracks.',
       },
     ],
     reviews: [],
@@ -103,6 +109,7 @@ methods: {
   },
   updateVariant(index) {
     this.selectedVariant = index
+    this.selectedInfo = this.variants[index].info
   },
   addReview(review) {
     this.reviews.push(review)
@@ -128,7 +135,7 @@ computed: {
     if (this.premium) {
       return 'Free'
     }
-    return 2.99
+    return 78
   }
 }
 })
