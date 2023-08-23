@@ -13,6 +13,24 @@ app.component('product-display', {
       <img 
         :src="image" 
         :class="{ 'out-of-stock-img': !inStock }" />
+      <div class="button-group">
+      <!-- add to cart -->
+        <button 
+          class="button" 
+          @click="addToCart" 
+          :class="{ disabledButton: !inStock }" 
+          :disabled="!inStock">
+            Add to Cart
+        </button>
+        <!-- remove from cart -->
+        <button 
+          class="button" 
+          @click="removeFromCart" 
+          :class="{ disabledButton: !inStock }" 
+          :disabled="!inStock">
+            Remove Item
+        </button>
+      </div>
     </div>
     <div class="product-info">
       <h1>{{ title }}</h1>
@@ -45,25 +63,7 @@ app.component('product-display', {
         :key="variant.id">
         {{ variant.size }}
       </div>
-      <div class="button-group">
-      <!-- add to cart -->
-        <button 
-          class="button" 
-          @click="addToCart" 
-          :class="{ disabledButton: !inStock }" 
-          :disabled="!inStock">
-          Add to Cart
-        </button>
-        <!-- remove from cart -->
-        <button 
-          class="button" 
-          @click="removeFromCart" 
-          :class="{ disabledButton: !inStock }" 
-          :disabled="!inStock">
-          Remove Item
-        </button>
-      </div>
-      <a :href="url">Link</a>
+
     </div>
   </div>
   <review-list 
@@ -82,7 +82,6 @@ data() {
     description: 'An iconic double album, spanning a diverse sonic landscape that explores themes of melancholy and emotional depth through a fusion of alternative rock, grunge, and dreamy psychedelia.',
     selectedVariant: 0,
     selectedInfo: '',
-    url: 'https://www.google.ru/search?newwindow=1&sca_esv=559050992&sxsrf=AB5stBh1gpEpx8eeYkHfkTX0b_KrjeGiHA:1692701675084&q=vue+mastery+socks&tbm=isch&source=lnms&sa=X&ved=2ahUKEwjbzbaQjfCAAxUjSvEDHWxcDT0Q0pQJegQIDBAB&biw=780&bih=703&dpr=1.25#imgrc=tRXYwf5E6vJ4YM',
     variants: [
       { id: 2234, 
         color: '#7F6236',
