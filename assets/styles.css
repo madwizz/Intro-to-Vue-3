@@ -180,3 +180,8 @@ ul {
     width: 90%;
   }
 }
+
+.product-row {
+  display: flex;
+  flex-direction: row;
+}
